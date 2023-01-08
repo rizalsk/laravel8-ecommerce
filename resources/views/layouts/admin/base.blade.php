@@ -45,7 +45,7 @@
 
 <x-partials.admin.layouts.scripts />
 <script src="{{ asset('js/app.js') }}" defer></script>
-@stack('scripts')
 @livewireScripts
+@stack('scripts')
 </body>
 </html>

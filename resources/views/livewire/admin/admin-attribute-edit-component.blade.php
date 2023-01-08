@@ -7,9 +7,9 @@
                     <!-- jquery validation -->
                     <div class="card card-light">
                         <div class="card-header">
-                            <h3 class="card-title">New User Attribute</h3>
+                            <h3 class="card-title">New Attribute</h3>
                             <div class="card-tools">
-                                <a class="btn btn-sm btn-primary" href="{{ route('admin.categoryattributes') }}">
+                                <a class="btn btn-sm btn-primary" href="{{ route('admin.attributes') }}">
                                     <i class="fas fa-chevron-left"></i> Back
                                 </a>
                             </div>
@@ -17,7 +17,7 @@
                         <!-- /.card-header -->
 
                         <!-- form start -->
-                        <form class="form-horizontal" id="f-category" wire:submit.prevent="store">
+                        <form class="form-horizontal" id="f-attribute" wire:submit.prevent="update">
 
                             <div class="card-body">
                                 <div class="row">
@@ -33,7 +33,9 @@
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Save</button>
+                                <button type="submit" class="btn btn-primary">Save and continue</button>
+                                <a wire:click="saveAndExit" class="btn btn-success">Save and exit</a>
+                                <a href="{{ route('admin.attributes') }}" class="btn btn-danger">Cancel</a>
                             </div>
                         </form>
                     </div>

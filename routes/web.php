@@ -20,9 +20,11 @@ use App\Http\Livewire\Admin\AdminProductComponent;
 use App\Http\Livewire\Admin\AdminProductAddComponent;
 use App\Http\Livewire\Admin\AdminProductEditComponent;
 
-use App\Http\Livewire\Admin\AdminCategoryAttributeComponent;
-use App\Http\Livewire\Admin\AdminCategoryAttributeAddComponent;
-use App\Http\Livewire\Admin\AdminCategoryAttributeEditComponent;
+use App\Http\Livewire\Admin\AdminAttributeComponent;
+use App\Http\Livewire\Admin\AdminAttributeAddComponent;
+use App\Http\Livewire\Admin\AdminAttributeEditComponent;
+
+use App\Http\Livewire\Admin\Categories\SetProductAttributeComponent;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,6 +76,10 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::prefix('categories')->name('categories.')->group(function(){
             Route::get('/add', AdminCategoryAddComponent::class)->name('add');
             Route::get('/{slug}', AdminCategoryEditComponent::class)->name('edit');
+            // set products attribute
+            Route::prefix('attributes')->name('attributes.')->group(function(){
+                Route::get('/products/{slug}', SetProductAttributeComponent::class)->name('products');
+            });
         });
 
         Route::get('/products', AdminProductComponent::class)->name('products');
@@ -82,11 +88,12 @@ Route::prefix('admin')->name('admin.')->group(function(){
             Route::get('/{slug}', AdminProductEditComponent::class)->name('edit');
         });
 
-        Route::get('/categoryattributes', AdminCategoryAttributeComponent::class)->name('categoryattributes');
-        Route::prefix('categoryattributes')->name('categoryattributes.')->group(function(){
-            Route::get('/add', AdminCategoryAttributeAddComponent::class)->name('add');
-            Route::get('/{id}', AdminCategoryAttributeEditComponent::class)->name('edit');
+        Route::get('/attributes', AdminAttributeComponent::class)->name('attributes');
+        Route::prefix('attributes')->name('attributes.')->group(function(){
+            Route::get('/add', AdminAttributeAddComponent::class)->name('add');
+            Route::get('/{id}', AdminAttributeEditComponent::class)->name('edit');
         });
+        
     });
 });
 

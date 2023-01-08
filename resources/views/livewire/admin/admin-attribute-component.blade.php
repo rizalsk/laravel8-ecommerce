@@ -7,7 +7,7 @@
                         <div class="card-header">
                             <h3 class="card-title">Master Attribute List</h3>
                             <div class="card-tools">
-                                <a class="btn btn-sm btn-primary" href="{{ route('admin.categoryattributes.add') }}">
+                                <a class="btn btn-sm btn-primary" href="{{ route('admin.attributes.add') }}">
                                     <i class="fas fa-plus"></i> Add
                                 </a>
                             </div>
@@ -29,7 +29,7 @@
                                         <td>{{$attribute->name}}</td>
                                         <td>
                                             <a class="btn btn-sm btn-warning"
-                                                href="{{route('admin.categoryattributes.edit', $attribute->id)}}">
+                                                href="{{route('admin.attributes.edit', $attribute->id)}}">
                                                 <i class="fas fa-edit" aria-hidden="true"></i>
                                             </a>
                                             <a class="btn btn-sm btn-danger"

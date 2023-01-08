@@ -60,6 +60,27 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                {{-- Attributes --}}
+                                <div class="row border-top mt-3 pt-3">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label" for="selectAttribute">Select Default Attributes</label>
+                                            {{-- wire:model="selectedAttributes" --}}
+                                            <select id="selectAttribute" wire:model="selectedAttributes" placeholder="-- select attribute --"
+                                                class="form-control" name="selectedAttributes[]" multiple="multiple">
+                                                @foreach ($attributes as $attr)
+                                                <option value="{{$attr->id}}" @if (in_array($attr->id, $selectedAttributes)){{'selected'}}
+                                                    @endif>{{$attr->name}}</option>
+                                                @endforeach
+                                
+                                            </select>
+                                        </div>
+                                        @error('attr') <span class="invalid-feedback">{{ $message }}</span> @enderror
+                                    </div>
+                                </div>
+                                {{-- ./Add Attributes --}}
+
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
@@ -80,3 +101,29 @@
         </div><!-- /.container-fluid -->
     </section>
 </div>
+
+@push('scripts')
+<script>
+    $(document).ready(function() {
+        
+        window.initSelectCompanyDrop = () => {
+            $('#selectAttribute').select2({
+                placeholder: 'Select attributes',
+                allowClear: true
+            });
+        }
+        
+        $('#selectAttribute').select2();
+
+        $('#selectAttribute').on('change', function (e) {
+            var data = $('#selectAttribute').select2("val");
+            @this.set('selectedAttributes', data);
+        });
+        
+        window.livewire.on('select2',()=>{
+            initSelectCompanyDrop();
+            console.log('event:livewire select2');
+        });
+    });
+</script>
+@endpush

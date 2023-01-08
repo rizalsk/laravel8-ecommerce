@@ -4,9 +4,9 @@ namespace App\Http\Livewire\Admin;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\CategoryAttribute;
+use App\Models\Attribute;
 
-class AdminCategoryAttributeComponent extends Component
+class AdminAttributeComponent extends Component
 {
     use WithPagination;
 
@@ -26,7 +26,7 @@ class AdminCategoryAttributeComponent extends Component
         $this->confirmed = $id;
     }
 
-    public function destroy(CategoryAttribute $attribute){
+    public function destroy(Attribute $attribute){
         $attribute->delete();
         $this->dispatchBrowserEvent('toastr:success',[
             'message' => 'Attribute has been deleted successfully!'
@@ -36,8 +36,8 @@ class AdminCategoryAttributeComponent extends Component
 
     public function render()
     {
-        return view('livewire.admin.admin-category-attribute-component',[
-            'attributes' => CategoryAttribute::where(function($sub_query){
+        return view('livewire.admin.admin-attribute-component',[
+            'attributes' => Attribute::where(function($sub_query){
     							$sub_query->where('name', 'LIKE', '%'.$this->search.'%');
     						})->paginate(10)
         ])
@@ -49,16 +49,15 @@ class AdminCategoryAttributeComponent extends Component
                     'title' => 'Dahboard',
                     'link' => route('admin.dashboard'),
                 ],
-                'categoryattributes'        => [
+                'attributes'        => [
                     'title' => 'User Attribute',
                     'link' => '',
                 ],
                 
             ],
             'nav' => [
-                'categoryattributes'        => 'active',
+                'attributes'        => 'active',
             ]
         ]);
     }
-    
 }

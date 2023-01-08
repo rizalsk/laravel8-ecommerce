@@ -39,7 +39,7 @@
                     </li>
                     <li class="nav-header">Attribute</li>
                     <li class="nav-item">
-                        <a href="{{ route('admin.categoryattributes') }}" class="nav-link {{$nav['categoryattributes'] ?? ''}}">
+                        <a href="{{ route('admin.attributes') }}" class="nav-link {{$nav['attributes'] ?? ''}}">
                             <i class="nav-icon fas fa-ellipsis-v"></i>
                             <p>
                                 Master Attribute

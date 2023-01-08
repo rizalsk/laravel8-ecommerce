@@ -221,7 +221,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group row d-flex d-flex-inline justiry-content-end">
                                             <div class="col-md-9 col-sm-9">
-                                                <label class="control-label" for="attributes">Attribute</label>
+                                                <label class="control-label" for="attributes">Set Attribute</label>
                                                 <select wire:model="attr" id="attributes" name="attributes" class="form-control" style="width: 100%;">
                                                     <option value="" selected>-- select attr --</option>
                                                     @foreach ($pattributes as $attr)
@@ -236,6 +236,7 @@
                                         @error('attr') <span class="invalid-feedback">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
+
                                 <div class="row">
                                     
                                     @foreach ($inputs as $key => $value)

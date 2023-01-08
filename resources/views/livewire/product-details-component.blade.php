@@ -59,16 +59,16 @@
 
                         <div>
                             @php
-                                $pavalues = $product->attributeValues->unique('product_attribute_id')
+                                $pavalues = $product->attributeValues->unique('attribute_id')
                             @endphp
                             @foreach ( $pavalues as $av)
                                 <div class="row mt-2">
                                     <div class="col-xs-2">
-                                        <p>{{$av->productAttribute->name}}</p>
+                                        <p>{{$av->attribute->name}}</p>
                                     </div>
                                     <div class="col-xs-10">
                                         <select name="" class="form-control" id="">
-                                            @foreach ($av->productAttribute->productAttributeValues->where('product_id', $product->id) as $pav)
+                                            @foreach ($av->attribute->productAttributeValues->where('product_id', $product->id) as $pav)
                                                 <option value="{{$pav->id}}">{{$pav->value}}</option>
                                             @endforeach
                                         </select>
@@ -109,9 +109,9 @@
                                     <tbody>
                                         @foreach ( $pavalues as $av )
                                             <tr>
-                                                <th>{{$av->productAttribute->name}}</th>
-                                                <td class="product_weight">
-                                                    {{ implode( ',', $av->productAttribute->productAttributeValues->where('product_id', $product->id)->pluck('value')->toArray() )  }}
+                                                <th style="width: 30%;">{{$av->attribute->name}}</th>
+                                                <td >
+                                                    {{ implode( ',', $av->attribute->productAttributeValues->where('product_id', $product->id)->pluck('value')->toArray() )  }}
                                                 </td>
                                             </tr>
                                         @endforeach

@@ -4,7 +4,8 @@ namespace App\Http\Livewire\Admin;
 
 use Livewire\Component;
 use App\Models\Product;
-use App\Models\ProductAttribute;
+use App\Models\CategoryAttribute;
+use App\Models\Attribute;
 use App\Models\ProductAttributeValue;
 use App\Models\Category;
 use Illuminate\Support\Str;
@@ -113,8 +114,8 @@ class AdminProductAddComponent extends Component
                 foreach ($avalues as $avalue) {
                     # code...
                     $attr_value = new ProductAttributeValue();
-                    $attr_value->product_attribute_id = $key;
-                    $attr_value->value = ltrim($avalue);
+                    $attr_value->attribute_id = $key;
+                    $attr_value->value = trim($avalue);
                     $attr_value->product_id = $product->id;
                     $attr_value->save();
                 }
@@ -135,7 +136,7 @@ class AdminProductAddComponent extends Component
     {
         return view('livewire.admin.admin-product-add-component',[
             'categories' => Category::latest()->get(),
-            'pattributes' => ProductAttribute::all()
+            'pattributes' => Attribute::all()
         ])
         ->layout('layouts.admin.base')
         ->layoutData([

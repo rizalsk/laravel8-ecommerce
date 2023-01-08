@@ -5,7 +5,8 @@ namespace App\Http\Livewire\Admin;
 use Livewire\Component;
 use App\Models\Product;
 use App\Models\Category;
-use App\Models\ProductAttribute;
+use App\Models\Attribute;
+use App\Models\CategoryAttribute;
 use App\Models\ProductAttributeValue;
 use Illuminate\Support\Str;
 use Livewire\WithFileUploads;
@@ -79,10 +80,10 @@ class AdminProductEditComponent extends Component
         $this->product_id = $product->id ;
 
         // attribute values
-        $attribute_arr =  $this->attribute_arr = $this->inputs = $product->attributeValues->where('product_id', $product->id)->unique('product_attribute_id')->pluck('product_attribute_id');
+        $attribute_arr =  $this->attribute_arr = $this->inputs = $product->attributeValues->where('product_id', $product->id)->unique('attribute_id')->pluck('attribute_id');
 
         foreach ($attribute_arr as $a_arr) {
-            $allAttributeValue = ProductAttributeValue::where('product_id',$product->id)->where('product_attribute_id', $a_arr)->get()->pluck('value');
+            $allAttributeValue = ProductAttributeValue::where('product_id',$product->id)->where('attribute_id', $a_arr)->get()->pluck('value');
             $valueString = '';
             foreach ($allAttributeValue as $value) {
                 $valueString = $valueString . $value . ',';
@@ -95,7 +96,7 @@ class AdminProductEditComponent extends Component
     {
         return view('livewire.admin.admin-product-edit-component',[
             'categories' => Category::latest()->get(),
-            'pattributes' => ProductAttribute::all()
+            'pattributes' => Attribute::all()
         ])
         ->layout('layouts.admin.base')
         ->layoutData([
@@ -184,8 +185,9 @@ class AdminProductEditComponent extends Component
                 $avalues = explode(',', $attribute_value);
                 foreach ($avalues as $avalue) {
                     $attr_value = new ProductAttributeValue();
-                    $attr_value->product_attribute_id = $key;
-                    $attr_value->value = ltrim($avalue);
+                    $attr_value->attribute_id = $key;
+                    $attr_value->category_id = $product->category_id ?? null;
+                    $attr_value->value = trim($avalue);
                     $attr_value->product_id = $product->id;
                     $attr_value->save();
                 }

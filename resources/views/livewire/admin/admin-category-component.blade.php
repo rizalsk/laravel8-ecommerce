@@ -20,6 +20,7 @@
                                         <th>ID</th>
                                         <th>Category Name</th>
                                         <th>Slug</th>
+                                        <th>Parent</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -29,12 +30,17 @@
                                             <td>{{$category->id}}</td>
                                             <td>{{$category->name}}</td>
                                             <td>{{$category->slug}}</td>
+                                            <td>{{ $category->parent()->first()->name ?? '' }}</td>
                                             <td>
                                                 <a class="btn btn-sm btn-warning" href="{{route('admin.categories.edit', $category->slug)}}">
                                                     <i class="fas fa-edit" aria-hidden="true"></i>
                                                 </a>
                                                 <a class="btn btn-sm btn-danger" wire:click="confirmDelete({{$category->id}})" wire:loading.attr='disabled' href="#">
                                                     <i class="fas fa-trash" aria-hidden="true"></i>
+                                                </a>
+                                                <a class="btn btn-sm btn-info" href="{{route('admin.categories.attributes.products', $category->slug)}}">
+                                                    <i class="fas fa-edit" aria-hidden="true"></i>
+                                                    set product attributes
                                                 </a>
                                             </td>
                                         </tr>

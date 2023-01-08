@@ -4,6 +4,8 @@ namespace App\Http\Livewire\Admin;
 
 use Livewire\Component;
 use App\Models\Category;
+use App\Models\Attribute;
+use App\Models\CategoryAttribute;
 use Illuminate\Support\Str;
 
 class AdminCategoryEditComponent extends Component
@@ -14,9 +16,10 @@ class AdminCategoryEditComponent extends Component
     public $name;
     public $slug;
     public $category;
+    public $attributes;
+
     public $updateCategory = false;
     public $search = false;
-
 
     public $exit = false;
 
@@ -25,19 +28,37 @@ class AdminCategoryEditComponent extends Component
         'slug' => 'required',
     ];
 
-    protected $listeners = ['deleteCategory'=>'destroy'];
+    public $attr;
+    public $inputs = [];
+    public $attribute_arr = [];
+    public $attribute_values = [];
+    
+    public $selectedAttributes = [];
+    
+    protected $listeners = [
+        'selectedAttributeItem',
+    ];
+
+    public function hydrate()
+    {
+        $this->emit('select2');
+    }
 
     public function mount($slug){
         $this->slug = $slug;
         $category = $this->original = $this->category = Category::where('slug', $slug)->firstOrFail();
         $this->parent_id = $category->parent_id;
         $this->name = $category->name;
+        $this->selectedAttributes = $selectedAttributes = $category->attributes()->pluck('attributes.id')->toArray();
     }
-
+    
     public function render()
     {
+        $attributes = $this->attributes = Attribute::orderBy('name', 'asc')->get();
         return view('livewire.admin.admin-category-edit-component', [
-            'categories' => Category::whereNull('parent_id')->latest()->get()
+            //whereNull('parent_id')->
+            'categories' => Category::where('id','!=',$this->category->id)->latest()->get(),
+            'attributes' => $attributes
         ])
         ->layout('layouts.admin.base')
         ->layoutData([
@@ -95,15 +116,29 @@ class AdminCategoryEditComponent extends Component
 
         try{
             // Update category
-            Category::where('slug', $this->category->slug )->update([
+            $category = Category::where('slug', $this->category->slug )->first();
+
+            $category->update([
                 'name' => $this->name,
                 'slug' => $this->slug,
                 'parent_id' => $this->parent_id
             ]);
 
+            if(count($this->selectedAttributes) > 0){
+
+                CategoryAttribute::where('category_id', $this->category->id)->delete();
+                foreach ($this->selectedAttributes as $key => $value) {
+                    $catAttribute = new CategoryAttribute();
+                    $catAttribute->category_id = $this->category->id;
+                    $catAttribute->attribute_id = $value;
+                    $catAttribute->save();
+                }
+            }
+
             $this->dispatchBrowserEvent('toastr:success',[
                 'message' => 'Category has been Updated successfully!'
-            ]);    
+            ]);
+
             session()->flash('success','Category Updated Successfully!!');
 
         }catch(\Throwable $th){
