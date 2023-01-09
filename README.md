@@ -16,16 +16,22 @@
 1. Clone to your base project directory.
     
 	```
-	git clone https://github.com/rizalsk/laravel8-ecommerce.git
+	git clone https://github.com/rizalsk/laravel8-ecommerce.git laravel-ecommerce
 	```
 	
-2. Install composer dependencies.
+2. Go to project dir.
+    
+	```
+	cd laravel-ecommerce
+	```
+	
+3. Install composer dependencies.
 
 	```
 	composer install
 	```
 	
-3. Create configuration file `.env` (copy from `.env.example`)
+4. Create configuration file `.env` (copy from `.env.example`)
 
 	```
 	##MySQL
@@ -37,25 +43,24 @@
 	DB_PASSWORD=
 	```
     
-1. Migrate the database.
+5. Migrate the database.
 
 	```
 	php artisan migrate
 	```
-1. Seed the user database.
+6. Seed the user database.
 
 	```
 	php artisan db:seed
 	```
-1. Run Artisan command Install Passport Oauth2.
+7. Run Artisan command Install Passport Oauth2.
 
 	```
 	php artisan run serve --port=8000
 	
 	```
 
-2. Login with admin
-    - Method : POST
+8. Login with admin
     - Default URL : 127.0.0.1:8000/admin/login
     - params
         ```
